@@ -1,0 +1,15 @@
+<launch>
+
+    <include file="$(find-pkg-share nubot)/launch/simulate.launch.xml">
+        <arg name="use_rviz" value="false"/>
+        <arg name="world" value="nubot_simple.sdf"/>
+    </include>
+
+    <include file="$(find-pkg-share slam_toolbox)/launch/online_async_launch.py"></include>
+
+    <include file="$(find-pkg-share nav2_bringup)/launch/navigation_launch.py">
+        <arg name="params_file" value="$(find-pkg-share nubot_nav)/nav2_params.yaml"/>
+    </include>
+
+    <node pkg="rviz2" exec="rviz2" args="-d $(find-pkg-share nubot_nav)/nubot_urdf.rviz"/>
+</launch>
