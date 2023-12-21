@@ -1,4 +1,4 @@
-# ME495 Embedded Systems Homework 4
+# SLAM Frontier Exploration with Wavefront Planning
 Author: Graham Clifford
 
 This package uses breadth-first search to autonomously drive a differential-drive robot named "nubot"
