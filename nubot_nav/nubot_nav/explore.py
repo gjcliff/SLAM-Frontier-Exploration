@@ -169,19 +169,23 @@ class Explore(Node):
         """
         num_frontiers = 1
         num_walls = 0
-        grid_length = 10
+        grid_length = 20
         wall_threshold = 0
 
-        # I'm going to iterate through the four quadrants
-        # of a square with the frontier cell in question
-        # at the center.
+        start_posx = index[0] - grid_length/2
+        start_posy = index[1] - grid_length/2
 
-        # first quadrant, top right
+        self.get_logger().info(f"start_posx: {start_posx}")
+        self.get_logger().info(f"start_posy: {start_posy}")
+
         for i in range(grid_length):
             for j in range(grid_length):
-                child_position_row = index[0] + i
-                child_position_column = index[1] + j
-                child_position = (child_position_row, child_position_column)
+                child_position_row = int(start_posx + i)
+                child_position_column = int(start_posy + j)
+                child_position = (child_position_row,
+                                  child_position_column)
+
+                self.get_logger().info(f"child_position: {child_position}")
 
                 if child_position not in self.visited and \
                         self.original_occupancy_grid_data[
@@ -189,59 +193,6 @@ class Explore(Node):
                     num_frontiers += 1
                 if self.original_occupancy_grid_data[
                         child_position_row][child_position_column] == 100:
-                    num_walls += 1
-                    if num_walls > wall_threshold:
-                        return False
-
-        # second quadrant, top left
-        for i in range(grid_length):
-            for j in range(grid_length):
-                child_position_row = index[0] - i
-                child_position_column = index[1] + j
-                child_position = (child_position_row, child_position_column)
-
-                if child_position not in self.visited and \
-                        self.original_occupancy_grid_data[
-                            child_position_row][child_position_column] < 0:
-                    num_frontiers += 1
-                if self.original_occupancy_grid_data[
-                        child_position_row][child_position_column] == 100:
-                    num_walls += 1
-                    if num_walls > wall_threshold:
-                        return False
-
-        # third quadrant, bottom right
-        for i in range(grid_length):
-            for j in range(grid_length):
-                child_position_row = index[0] + i
-                child_position_column = index[1] - j
-                child_position = (child_position_row, child_position_column)
-
-                if child_position not in self.visited and \
-                        self.original_occupancy_grid_data[
-                            child_position_row][child_position_column] < 0:
-                    num_frontiers += 1
-                if self.original_occupancy_grid_data[
-                        child_position_row][child_position_column] == 100:
-                    num_walls += 1
-                    if num_walls > wall_threshold:
-                        return False
-
-        # fourth quadrant, bottom left
-        for i in range(grid_length):
-            for j in range(grid_length):
-                child_position_row = index[0] - i
-                child_position_column = index[1] - j
-                child_position = (child_position_row, child_position_column)
-
-                if child_position not in self.visited and \
-                        self.original_occupancy_grid_data[
-                            child_position_row][
-                                child_position_column] < 0:
-                    num_frontiers += 1
-                if self.original_occupancy_grid_data[
-                    child_position_row][
-                        child_position_column] == 100:
                     num_walls += 1
                     if num_walls > wall_threshold:
                         return False
@@ -354,9 +305,9 @@ class Explore(Node):
         marker.type = Marker.SPHERE
         marker.action = Marker.ADD
         marker.pose = pose_stamped.pose
-        marker.scale.x = 0.1
-        marker.scale.y = 0.1
-        marker.scale.z = 0.1
+        marker.scale.x = 0.3
+        marker.scale.y = 0.3
+        marker.scale.z = 0.3
         marker.color.a = 1.0
         marker.color.r = 1.0
 
